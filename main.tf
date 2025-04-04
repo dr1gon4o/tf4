@@ -1,0 +1,95 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 4.0"
+      # version = "4.25.0"
+    }
+  }
+}
+
+provider "azurerm" {
+  subscription_id = "225ebe37-0c58-432a-a60a-44ffcbc2dcae"
+  features {}
+}
+
+# resource "random_integer" "ri" {
+#   min = 1000 # Replace with your minimum range
+#   max = 9999 # Replace with your maximum range
+# }
+
+resource "azurerm_resource_group" "arg" {
+  name     = var.resource_group_name
+  location = var.resource_group_location
+}
+
+resource "azurerm_service_plan" "aasp" {
+    name                = var.app_service_plan_name
+  location            = var.resource_group_location
+  resource_group_name = var.resource_group_name
+  # kind                = "Linux"
+  os_type = "Linux"
+  # sku {
+  #   tier = "Free"
+  #   size = "F1"
+  # }
+  sku_name = "F1"
+}
+
+resource "azurerm_mssql_server" "hoho" {
+  name                         = var.sql_server_name
+  resource_group_name          = var.resource_group_name
+  location                     = var.resource_group_location 
+  version                      = "12.0"
+  administrator_login          = "sqladmin"
+  administrator_login_password = "P@ssw0rd1234!"
+}
+
+resource "azurerm_mssql_firewall_rule" "example" {
+  name             = var.firewall_rule_name
+  server_id        = azurerm_mssql_server.hoho.id
+  start_ip_address = "0.0.0.0"
+  end_ip_address   = "10.0.17.62"
+}
+
+resource "azurerm_mssql_database" "amsd" {
+  name         = var.sql_database_name
+  server_id    = azurerm_mssql_server.hoho.id
+  collation    = "SQL_Latin1_General_CP1_CI_AS"
+  license_type = "LicenseIncluded"
+  max_size_gb  = 2
+  sku_name     = "S0"
+  enclave_type = "VBS"
+
+  tags = {
+    foo = "bar"
+  }
+}
+
+resource "azurerm_linux_web_app" "haha" {
+  name                = var.app_service_name
+  location            = var.resource_group_location
+  resource_group_name = var.resource_group_name
+  # app_service_plan_id = azurerm_app_service_plan.aasp.id
+  service_plan_id = azurerm_service_plan.aasp.id
+
+  site_config {
+    application_stack {
+      dotnet_version = "6.0"
+    }
+    always_on = false
+  }
+  connection_string {
+    name  = "DefaultConnection"
+    type  = "SQLAzure"
+    value = "Data Source=tcp:${azurerm_mssql_server.hoho.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_mssql_database.amsd.name};User ID=${azurerm_mssql_server.hoho.administrator_login};Password=${azurerm_mssql_server.hoho.administrator_login_password};Trusted_Connection=False;MultipleActiveResultSets=True;"
+  }
+}
+
+resource "azurerm_app_service_source_control" "aassc" {
+  app_id   = azurerm_linux_web_app.haha.id
+  repo_url = var.github_repo_url
+  branch   = "main"
+  # use_manual_integration = true
+}
+
