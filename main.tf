@@ -28,8 +28,8 @@ resource "azurerm_resource_group" "arg" {
 
 resource "azurerm_service_plan" "aasp" {
   name                = var.app_service_plan_name
-  location            = var.resource_group_location
-  resource_group_name = var.resource_group_name
+  resource_group_name = azurerm_resource_group.arg.name
+  location            = azurerm_resource_group.arg.location
   # kind                = "Linux"
   os_type = "Linux"
   # sku {
@@ -41,8 +41,8 @@ resource "azurerm_service_plan" "aasp" {
 
 resource "azurerm_mssql_server" "hoho" {
   name                         = var.sql_server_name
-  resource_group_name          = var.resource_group_name
-  location                     = var.resource_group_location
+  resource_group_name          = azurerm_resource_group.arg.name
+  location                     = azurerm_resource_group.arg.location
   version                      = "12.0"
   administrator_login          = "sqladmin"
   administrator_login_password = "P@ssw0rd1234!"
@@ -74,8 +74,8 @@ resource "azurerm_mssql_database" "amsd" {
 
 resource "azurerm_linux_web_app" "haha" {
   name                = var.app_service_name
-  location            = var.resource_group_location
-  resource_group_name = var.resource_group_name
+  resource_group_name =azurerm_resource_group.arg.name
+  location            = azurerm_resource_group.arg.location
   # app_service_plan_id = azurerm_app_service_plan.aasp.id
   service_plan_id = azurerm_service_plan.aasp.id
 
