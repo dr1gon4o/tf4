@@ -19,12 +19,15 @@ provider "azurerm" {
 # }
 
 resource "azurerm_resource_group" "arg" {
+  # ei taka moje da go napravia ako iskam da ostavia random nomer da se generira sled vsiako variable ime(name)
+  # moje i bez donlata cherta predi dolarcheto $
+  # name = "${var.resource_group_name}_${random_integer.ri.result}"
   name     = var.resource_group_name
   location = var.resource_group_location
 }
 
 resource "azurerm_service_plan" "aasp" {
-    name                = var.app_service_plan_name
+  name                = var.app_service_plan_name
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
   # kind                = "Linux"
@@ -39,10 +42,13 @@ resource "azurerm_service_plan" "aasp" {
 resource "azurerm_mssql_server" "hoho" {
   name                         = var.sql_server_name
   resource_group_name          = var.resource_group_name
-  location                     = var.resource_group_location 
+  location                     = var.resource_group_location
   version                      = "12.0"
   administrator_login          = "sqladmin"
   administrator_login_password = "P@ssw0rd1234!"
+  # tova e da zaebiklim problema s sql s nashite accounti
+  # storage_account_type = "Zone"
+  # geo_backup_enabled = false
 }
 
 resource "azurerm_mssql_firewall_rule" "example" {
