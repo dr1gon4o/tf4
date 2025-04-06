@@ -22,7 +22,7 @@ resource "random_integer" "ri" {
 resource "azurerm_resource_group" "arg" {
   # ei taka moje da go napravia ako iskam da ostavia random nomer da se generira sled vsiako variable ime(name)
   # moje i bez donlata cherta predi dolarcheto $
-  name = "${var.resource_group_name}_${random_integer.ri.result}"
+  name = "${var.resource_group_name}${random_integer.ri.result}"
   # name     = var.resource_group_name
   location = var.resource_group_location
 }
@@ -38,10 +38,12 @@ resource "azurerm_service_plan" "aasp" {
   #   size = "F1"
   # }
   sku_name = "F1"
+
 }
 
 resource "azurerm_mssql_server" "hoho" {
-  name                         = var.sql_server_name
+  # name                         = var.sql_server_name
+  name                         = "${var.sql_server_name}${random_integer.ri.result}"
   resource_group_name          = azurerm_resource_group.arg.name
   location                     = azurerm_resource_group.arg.location
   version                      = "12.0"
