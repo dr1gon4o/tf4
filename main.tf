@@ -74,7 +74,7 @@ resource "azurerm_mssql_database" "amsd" {
 
 resource "azurerm_linux_web_app" "haha" {
   name                = var.app_service_name
-  resource_group_name =azurerm_resource_group.arg.name
+  resource_group_name = azurerm_resource_group.arg.name
   location            = azurerm_resource_group.arg.location
   # app_service_plan_id = azurerm_app_service_plan.aasp.id
   service_plan_id = azurerm_service_plan.aasp.id
