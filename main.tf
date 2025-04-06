@@ -12,7 +12,7 @@ terraform {
     storage_account_name = "taskboardstorage123"
     container_name       = "taskboardcontainer1"
     key                  = "terraform.tfstate"
-    # subscription_id      = "225ebe37-0c58-432a-a60a-44ffcbc2dcae" # Ensure this is specified
+    subscription_id      = "225ebe37-0c58-432a-a60a-44ffcbc2dcae" # Ensure this is specified
   }
 }
 
