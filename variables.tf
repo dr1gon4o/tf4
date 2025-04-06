@@ -66,5 +66,5 @@ variable "firewall_rule_name" {
 variable "github_repo_url" {
   description = "github repo url"
   type        = string
-  default     = "https://github.com/nakov/ContactBook.git"
+  default     = "https://github.com/dr1gon4o/Azure-TaskBoard.git"
 }
