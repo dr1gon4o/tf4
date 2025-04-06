@@ -24,7 +24,7 @@ variable "resource_group_location" {
 variable "app_service_plan_name" {
   description = "app service plan name in azure"
   type        = string
-  default     = "task-board"
+  default     = "task-board-plan"
 }
 
 variable "app_service_name" {
