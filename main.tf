@@ -57,9 +57,6 @@ resource "azurerm_mssql_server" "hoho" {
   version                      = "12.0"
   administrator_login          = "sqladmin"
   administrator_login_password = "P@ssw0rd1234!"
-  # tova e da zaebiklim problema s sql s nashite accounti
-  # storage_account_type = "Zone"
-  # geo_backup_enabled = false
 }
 
 resource "azurerm_mssql_firewall_rule" "example" {
@@ -72,17 +69,18 @@ resource "azurerm_mssql_firewall_rule" "example" {
 
 resource "azurerm_mssql_database" "amsd" {
   # name         = var.sql_database_name
-  name         = "${var.sql_database_name}${random_integer.ri.result}"
-  server_id    = azurerm_mssql_server.hoho.id
-  collation    = "SQL_Latin1_General_CP1_CI_AS"
-  license_type = "LicenseIncluded"
-  max_size_gb  = 2
-  sku_name     = "S0"
-  enclave_type = "VBS"
+  name           = "${var.sql_database_name}${random_integer.ri.result}"
+  server_id      = azurerm_mssql_server.hoho.id
+  collation      = "SQL_Latin1_General_CP1_CI_AS"
+  license_type   = "LicenseIncluded"
+  max_size_gb    = 2
+  sku_name       = "S0"
+  zone_redundant = false
+  # tova e da zaebiklim problema s sql s nashite accounti + zobe redundat false
+  storage_account_type = "Zone"
+  geo_backup_enabled   = false
 
-  tags = {
-    foo = "bar"
-  }
+
 }
 
 resource "azurerm_linux_web_app" "haha" {
