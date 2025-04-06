@@ -28,7 +28,7 @@ resource "azurerm_resource_group" "arg" {
 }
 
 resource "azurerm_service_plan" "aasp" {
-  name                = var.app_service_plan_name
+  name = var.app_service_plan_name
   # name                = "${var.app_service_plan_name}${random_integer.ri.result}"
   resource_group_name = azurerm_resource_group.arg.name
   location            = azurerm_resource_group.arg.location
@@ -80,7 +80,7 @@ resource "azurerm_mssql_database" "amsd" {
 
 resource "azurerm_linux_web_app" "haha" {
   # name                = var.app_service_name
-  name             = "${var.app_service_name}${random_integer.ri.result}"
+  name                = "${var.app_service_name}${random_integer.ri.result}"
   resource_group_name = azurerm_resource_group.arg.name
   location            = azurerm_resource_group.arg.location
   # app_service_plan_id = azurerm_app_service_plan.aasp.id
