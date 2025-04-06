@@ -1,5 +1,5 @@
 
-name: 'Terraform test'
+name: 'Terraform plan'
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  terraform-test:
+  terraform-plan:
     name: 'Terraform'
     runs-on: ubuntu-latest
 
