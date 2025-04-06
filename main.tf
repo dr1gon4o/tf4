@@ -14,16 +14,16 @@ provider "azurerm" {
   subscription_id = "225ebe37-0c58-432a-a60a-44ffcbc2dcae"
 }
 
-# resource "random_integer" "ri" {
-#   min = 1000 # Replace with your minimum range
-#   max = 9999 # Replace with your maximum range
-# }
+resource "random_integer" "ri" {
+  min = 1000 # Replace with your minimum range
+  max = 9999 # Replace with your maximum range
+}
 
 resource "azurerm_resource_group" "arg" {
   # ei taka moje da go napravia ako iskam da ostavia random nomer da se generira sled vsiako variable ime(name)
   # moje i bez donlata cherta predi dolarcheto $
-  # name = "${var.resource_group_name}_${random_integer.ri.result}"
-  name     = var.resource_group_name
+  name = "${var.resource_group_name}_${random_integer.ri.result}"
+  # name     = var.resource_group_name
   location = var.resource_group_location
 }
 
