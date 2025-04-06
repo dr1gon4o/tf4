@@ -29,6 +29,7 @@ resource "azurerm_resource_group" "arg" {
 
 resource "azurerm_service_plan" "aasp" {
   name                = var.app_service_plan_name
+  # name                = "${var.app_service_plan_name}${random_integer.ri.result}"
   resource_group_name = azurerm_resource_group.arg.name
   location            = azurerm_resource_group.arg.location
   # kind                = "Linux"
@@ -55,14 +56,16 @@ resource "azurerm_mssql_server" "hoho" {
 }
 
 resource "azurerm_mssql_firewall_rule" "example" {
-  name             = var.firewall_rule_name
+  # name             = var.firewall_rule_name
+  name             = "${var.firewall_rule_name}${random_integer.ri.result}"
   server_id        = azurerm_mssql_server.hoho.id
   start_ip_address = "0.0.0.0"
   end_ip_address   = "10.0.17.62"
 }
 
 resource "azurerm_mssql_database" "amsd" {
-  name         = var.sql_database_name
+  # name         = var.sql_database_name
+  name         = "${var.sql_database_name}${random_integer.ri.result}"
   server_id    = azurerm_mssql_server.hoho.id
   collation    = "SQL_Latin1_General_CP1_CI_AS"
   license_type = "LicenseIncluded"
@@ -76,7 +79,8 @@ resource "azurerm_mssql_database" "amsd" {
 }
 
 resource "azurerm_linux_web_app" "haha" {
-  name                = var.app_service_name
+  # name                = var.app_service_name
+  name             = "${var.app_service_name}${random_integer.ri.result}"
   resource_group_name = azurerm_resource_group.arg.name
   location            = azurerm_resource_group.arg.location
   # app_service_plan_id = azurerm_app_service_plan.aasp.id
