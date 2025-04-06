@@ -12,7 +12,7 @@ terraform {
     storage_account_name = "taskboardstorage123"
     container_name       = "taskboardcontainer1"
     key                  = "terraform.tfstate"
-    subscription_id      = "225ebe37-0c58-432a-a60a-44ffcbc2dcae" # Ensure this is specified
+    # subscription_id      = "225ebe37-0c58-432a-a60a-44ffcbc2dcae" # Ensure this is specified
   }
 }
 
@@ -106,7 +106,7 @@ resource "azurerm_linux_web_app" "haha" {
 
 resource "azurerm_app_service_source_control" "aassc" {
   app_id   = azurerm_linux_web_app.haha.id
-  repo_url = var.github_repo_url
+  repo_url = "https://github.com/dr1gon4o/Azure-TaskBoard.git"
   branch   = "main"
 }
 
