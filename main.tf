@@ -64,7 +64,7 @@ resource "azurerm_mssql_firewall_rule" "example" {
   name             = "${var.firewall_rule_name}${random_integer.ri.result}"
   server_id        = azurerm_mssql_server.hoho.id
   start_ip_address = "0.0.0.0"
-  end_ip_address   = "10.0.17.62"
+  end_ip_address   = "0.0.0.0"
 }
 
 resource "azurerm_mssql_database" "amsd" {
