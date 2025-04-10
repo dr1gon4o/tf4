@@ -69,11 +69,11 @@ resource "azurerm_mssql_firewall_rule" "example" {
 
 resource "azurerm_mssql_database" "amsd" {
   # name         = var.sql_database_name
-  name           = "${var.sql_database_name}${random_integer.ri.result}"
-  server_id      = azurerm_mssql_server.hoho.id
-  collation      = "SQL_Latin1_General_CP1_CI_AS"
-  license_type   = "LicenseIncluded"
-  max_size_gb    = 2
+  name         = "${var.sql_database_name}${random_integer.ri.result}"
+  server_id    = azurerm_mssql_server.hoho.id
+  collation    = "SQL_Latin1_General_CP1_CI_AS"
+  license_type = "LicenseIncluded"
+  max_size_gb  = 2
   # sku_name       = "S0"
   zone_redundant = false
   # tova e da zaebiklim problema s sql s nashite accounti + zobe redundat false
