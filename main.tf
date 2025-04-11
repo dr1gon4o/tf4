@@ -8,11 +8,13 @@ terraform {
     }
   }
   backend "azurerm" {
+    #tozi storagerg triaba da si go napraim tova beshe image container v azure (10-Exercise-IaC-and-Monitoring)
     resource_group_name  = "StorageRG"
     storage_account_name = "taskboardstorage123"
     container_name       = "taskboardcontainer1"
     key                  = "terraform.tfstate"
-    subscription_id      = "225ebe37-0c58-432a-a60a-44ffcbc2dcae" # Ensure this is specified
+    #tova nes se slaga tuka a samo dolu
+    # subscription_id      = "225ebe37-0c58-432a-a60a-44ffcbc2dcae" # Ensure this is specified
   }
 }
 
